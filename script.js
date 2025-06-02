@@ -1,6 +1,6 @@
 
-const m2ProPaket = 2.89;
-const preisProM2 = 78.50;
+const m2ProPaket = 1.742;
+const preisProM2 = 55.00;
 const sockelleisten = {
   "Oeko-Sockelleiste konisch Eiche furniert lackiert": 4.0,
   "Oeko-Sockelleiste konisch weiss deckend RAL 9010": 4.0,
