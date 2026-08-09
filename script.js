@@ -89,6 +89,7 @@ function zeigeErgebnis(r) {
     <div class="ergebnis-total">
       <p>Total: CHF ${r.total.toFixed(2)}</p>
     </div>
+    <p class="anfrage-hint">Preise exkl. Montage — Montagekosten fallen zusätzlich an.</p>
     <p class="anfrage-hint">Möchten Sie diese Kalkulation als Grundlage für eine unverbindliche Anfrage nutzen? Nutzen Sie den Button unten.</p>
 `;
 }
@@ -212,9 +213,9 @@ async function erstellePdf(r, produktName) {
   doc.setFontSize(8.5);
   doc.setTextColor(...soft);
   const disclaimer = doc.splitTextToSize(
-    "Preise sind ohne Gewähr und verstehen sich exkl. MwSt. Dieser Kalkulator dient der schnellen Orientierung. " +
-    "Zusatzkosten für Zubehör wie Trittschalldämmung oder Montagematerial sind möglich. Holz ist ein Naturprodukt – " +
-    "Abweichungen in Farbe und Struktur zwischen Produktbild und Original sind möglich.",
+    "Preise sind ohne Gewähr und verstehen sich exkl. MwSt. und exkl. Montage — Montagekosten fallen zusätzlich an. " +
+    "Dieser Kalkulator dient der schnellen Orientierung. Zusatzkosten für Zubehör wie Trittschalldämmung sind möglich. " +
+    "Holz ist ein Naturprodukt – Abweichungen in Farbe und Struktur zwischen Produktbild und Original sind möglich.",
     contentW
   );
   doc.text(disclaimer, marginL, y);
@@ -267,6 +268,8 @@ Benötigt: ${r.anzahlStangen} Stangen à 4 m
 Preis Sockelleisten: CHF ${r.gesamtPreisSockel.toFixed(2)}
 
 Total: CHF ${r.total.toFixed(2)}
+
+(Preise exkl. Montage — Montagekosten fallen zusätzlich an.)
 
 (Die PDF-Kalkulation habe ich soeben heruntergeladen — bitte noch per Drag & Drop an diese E-Mail anhängen, bevor Sie sie senden.)
 

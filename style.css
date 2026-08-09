@@ -76,7 +76,7 @@ button {
 }
 
 .note::after {
-  content: "Alle unsere Preise verstehen sich exkl. MwSt.";
+  content: "Alle unsere Preise verstehen sich exkl. MwSt. und exkl. Montage — Montagekosten fallen zusätzlich an.";
   display: block;
   margin-top: 10px;
   font-style: italic;
