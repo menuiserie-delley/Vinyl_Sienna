@@ -103,3 +103,29 @@ button {
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
   height: auto;
 }
+
+#ergebnis {
+  margin-top: 20px;
+}
+.ergebnis-box {
+  background: #f6f6f6;
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-bottom: 12px;
+}
+.ergebnis-box h3 {
+  margin: 0 0 8px;
+  color: #2F4F4F;
+}
+.ergebnis-box p {
+  margin: 4px 0;
+}
+.ergebnis-total {
+  background: #2F4F4F;
+  color: #fff;
+  border-radius: 10px;
+  padding: 14px 18px;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}

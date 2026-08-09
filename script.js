@@ -1,23 +1,27 @@
 
 const m2ProPaket = 1.742;
 const preisProM2 = 55.00;
-const sockelleisten = {
-  "Oeko-Sockelleiste konisch Eiche furniert lackiert": 4.0,
-  "Oeko-Sockelleiste konisch weiss deckend RAL 9010": 4.0,
-  "Oeko-Sockelleiste konisch Eiche furniert geölt": 4.0,
-  "Oeko-Sockelleiste konisch Buche gedämpft furniert lackiert": 4.0,
-  "Oeko-Sockelleiste konisch Ahorn furniert lackiert": 4.0,
-  "Oeko-Sockelleiste konisch Nussbaum ami furniert lackiert": 4.0,
-  "Sockelleiste konisch Eiche massiv lackiert": 4.0,
-  "Sockelleiste konisch Eiche massiv geölt": 4.0,
-  "Sockelleiste konisch Buche weiss deckend RAL 9010": 4.0,
-  "Sockelleiste konisch Buche weiss deckend RAL 9003": 4.0,
-  "Sockelleiste parallel B-40 Kiefer massiv, weiss RAL 9010, lackiert": 4.0,
-  "Sockelleiste parallel B-60 Kiefer massiv, weiss RAL 9010, lackiert": 4.0,
-  "Sockelleiste konisch Kiefer massiv, weiss RAL 9016, lackiert": 4.0,
-  "Sockelleiste parallel B-40 Kiefer massiv, weiss RAL 9016, lackiert": 4.0,
-};
 
+// Preis pro Laufmeter (Spalte "Preis" aus dem Export AX, gelb markierte Sockelleisten-Artikel).
+// Sockelleisten sind immer in 4-m-Stangen erhältlich, daher Stückpreis = Preis x 4.
+const sockelleistenPreisProLfm = {
+  "Sockelleiste B-40 parallel, Kiefer massiv, Weiss RAL 9010, lackiert, Dim. 40x12 mm, Stk. à 4 m1": 3.15,
+  "Sockelleiste parallel B-60, Kiefer massiv, Weiss RAL 9016, lackiert, Dim. 60x12 mm, Stk. à 4m1": 4.45,
+  "Sockelleiste parallel B-40, Kiefer massiv, Weiss RAL 9016, lackiert, Dim. 40x12 mm, Stk. à 4 m1": 3.15,
+  "Oeko-Sockelleiste konisch Eiche furniert lackiert 60 x 14/8 mm 4 m1/Stk": 4.81,
+  "Oeko-Sockelleiste konisch foliert Weiss deckend RAL 9010 60 x 14/8 mm 4 m1/Stk": 5.76,
+  "Oeko-Sockelleiste konisch Eiche furniert geölt 60 x 14/8 mm 4 m1/Stk": 6.05,
+  "Oeko-Sockelleiste konisch Buche gedämpft furniert lackiert 60 x 14/8 mm 4 m1/Stk": 4.69,
+  "Oeko-Sockelleiste konisch Ahorn furniert lackiert 60 x 14/8 mm 4 m1/Stk": 4.69,
+  "Oeko-Sockelleiste konisch Nussbaum ami furniert lackiert 60 x 14/8 mm 4 m1/Stk": 5.24,
+  "Sockelleiste konisch Eiche massiv lackiert 60 x 12/8 mm": 10.15,
+  "Sockelleiste konisch Eiche massiv geölt 60 x 12/8 mm": 11.54,
+  "Sockelleiste konisch Buche weiss deckend RAL 9010 60 x 12/8 mm": 6.93,
+  "Sockelleiste konisch Buche weiss deckend RAL 9003 40 x 12/8 mm": 6.38,
+  "Alu-Sockel mit Fuss ungelocht Silber eloxiert 60 x 11 mm 4 m1/Stk": 9.44,
+  "Sockelleiste massiv Buche konisch RAL 9016 weiss deckend lackiert 60 x 12/8 mm fallende Längen 2.5 bis 4.0 lfm": 6.93,
+  "Sockel Kiefer konisch RAL 9016 4000x40x12/8 mm Holzherkunft: Europa, Ursprungsland Europa": 3.8,
+};
 
 let raumIndex = 1;
 
@@ -46,20 +50,33 @@ function berechne() {
   const anzahlPakete = Math.ceil(gesamtMitVerschnitt / m2ProPaket);
   const gesamtPreisBoden = anzahlPakete * m2ProPaket * preisProM2;
 
+  // Sockelleisten: benötigte Laufmeter = Fläche + 10 % (gleicher Wert wie beim Boden).
+  // Stangen à 4 m, Stückpreis = Preis pro Laufmeter x 4.
   const sockelleiste = document.getElementById("sockelleiste").value;
-  const preisSockelleiste = sockelleisten[sockelleiste] || 0;
-  const sockelLaenge = Math.ceil((gesamtMitVerschnitt * 1.10) / 4);
-  const gesamtPreisSockel = sockelLaenge * preisSockelleiste;
+  const preisProLfm = sockelleistenPreisProLfm[sockelleiste] || 0;
+  const preisProStange = preisProLfm * 4;
+  const benoetigteLfm = gesamtMitVerschnitt;
+  const anzahlStangen = Math.ceil(benoetigteLfm / 4);
+  const gesamtPreisSockel = anzahlStangen * preisProStange;
 
   const total = gesamtPreisBoden + gesamtPreisSockel;
 
   document.getElementById("ergebnis").innerHTML = `
-    <p><strong>Gesamtfläche (mit 10 % Verschnitt):</strong> ${gesamtMitVerschnitt.toFixed(2)} m²</p>
-    <p><strong>Benötigte Pakete:</strong> ${anzahlPakete} Pakete</p>
-    <p><strong>Gesamtpreis Boden:</strong> CHF ${gesamtPreisBoden.toFixed(2)}</p>
-    <p><strong>Sockelleisten:</strong> ${sockelLaenge} Stück (à 4 m) – ${sockelleiste}</p>
-    <p><strong>Gesamtpreis Sockelleisten:</strong> CHF ${gesamtPreisSockel.toFixed(2)}</p>
-    <p><strong>Total:</strong> CHF ${total.toFixed(2)}</p>
+    <div class="ergebnis-box">
+      <h3>Bodenbelag</h3>
+      <p><strong>Gesamtfläche (mit 10 % Verschnitt):</strong> ${gesamtMitVerschnitt.toFixed(2)} m²</p>
+      <p><strong>Benötigte Pakete:</strong> ${anzahlPakete} Pakete</p>
+      <p><strong>Preis Bodenbelag:</strong> CHF ${gesamtPreisBoden.toFixed(2)}</p>
+    </div>
+    <div class="ergebnis-box">
+      <h3>Sockelleisten</h3>
+      <p><strong>Modell:</strong> ${sockelleiste}</p>
+      <p><strong>Benötigt:</strong> ca. ${benoetigteLfm.toFixed(2)} lfm → ${anzahlStangen} Stangen à 4 m</p>
+      <p><strong>Preis Sockelleisten:</strong> CHF ${gesamtPreisSockel.toFixed(2)}</p>
+    </div>
+    <div class="ergebnis-total">
+      <p>Total: CHF ${total.toFixed(2)}</p>
+    </div>
 `;
 }
 
@@ -80,7 +97,7 @@ function setup() {
   const select = document.createElement("select");
   select.id = "sockelleiste";
   select.style.marginTop = "16px";
-  for (const typ in sockelleisten) {
+  for (const typ in sockelleistenPreisProLfm) {
     const opt = document.createElement("option");
     opt.value = typ;
     opt.innerText = typ;
