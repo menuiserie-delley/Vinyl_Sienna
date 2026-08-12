@@ -149,3 +149,23 @@ button {
   margin-top: 8px;
   line-height: 1.5;
 }
+
+.whatsapp-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #25D366;
+  color: #fff;
+  text-decoration: none;
+  font-size: 17px;
+  font-weight: bold;
+  padding: 14px 20px;
+  border-radius: 8px;
+  margin-top: 14px;
+}
+.whatsapp-btn:hover {
+  background-color: #1ebe5b;
+}

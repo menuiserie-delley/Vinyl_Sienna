@@ -2,6 +2,7 @@
 const m2ProPaket = 1.742;
 const preisProM2 = 55.00;
 const emailEmpfaenger = "info@menuiserie-delley.ch";
+const whatsappNummer = "41788297477";
 
 // Preis pro Laufmeter (Spalte "Preis" aus dem Export AX, gelb markierte Sockelleisten-Artikel).
 // Sockelleisten sind immer in 4-m-Stangen erhältlich, daher Stückpreis = Preis x 4.
@@ -228,7 +229,7 @@ async function erstellePdf(r, produktName) {
   doc.setFont("helvetica", "normal");
   doc.setFontSize(9);
   doc.setTextColor(...soft);
-  doc.text("Menuiserie Delley  ·  Haselweg 10, 2553 Safnern  ·  079 580 13 50  ·  info@menuiserie-delley.ch", pageW / 2, y, { align: "center" });
+  doc.text("Menuiserie Delley  ·  Haselweg 10, 2553 Safnern  ·  078 829 74 77  ·  info@menuiserie-delley.ch", pageW / 2, y, { align: "center" });
 
   return doc;
 }
@@ -327,6 +328,17 @@ function setup() {
   hint.className = "anfrage-hint";
   hint.innerText = "Lädt eine PDF-Zusammenfassung herunter und öffnet Ihr E-Mail-Programm mit einer vorausgefüllten Anfrage. Bitte die heruntergeladene PDF-Datei noch per Drag & Drop anhängen, da Browser aus Sicherheitsgründen keine Anhänge automatisch hinzufügen können.";
   container.appendChild(hint);
+
+  const produktName = document.querySelector("h1").textContent.trim();
+  const whatsappText = encodeURIComponent(`Hallo, ich interessiere mich für ${produktName} und möchte gerne mehr erfahren.`);
+  const whatsappBtn = document.createElement("a");
+  whatsappBtn.id = "whatsapp-btn";
+  whatsappBtn.className = "whatsapp-btn";
+  whatsappBtn.href = `https://wa.me/${whatsappNummer}?text=${whatsappText}`;
+  whatsappBtn.target = "_blank";
+  whatsappBtn.rel = "noopener";
+  whatsappBtn.innerHTML = `<svg viewBox="0 0 32 32" width="20" height="20" fill="#fff" xmlns="http://www.w3.org/2000/svg"><path d="M16 .396C7.163.396 0 7.559 0 16.396c0 2.837.744 5.5 2.04 7.805L.396 32l7.995-2.098A15.9 15.9 0 0 0 16 32.396c8.837 0 16-7.163 16-16S24.837.396 16 .396zm0 29.257c-2.51 0-4.868-.68-6.9-1.87l-.495-.293-4.744 1.245 1.267-4.63-.322-.51A13.19 13.19 0 0 1 2.8 16.396C2.8 9.06 8.664 3.196 16 3.196s13.2 5.864 13.2 13.2-5.864 13.257-13.2 13.257zm7.24-9.9c-.396-.198-2.34-1.155-2.703-1.287-.363-.132-.627-.198-.891.198-.264.396-1.023 1.287-1.254 1.551-.231.264-.462.297-.858.099-.396-.198-1.672-.616-3.184-1.964-1.177-1.05-1.972-2.347-2.203-2.743-.231-.396-.025-.61.173-.807.178-.177.396-.462.594-.693.198-.231.264-.396.396-.66.132-.264.066-.495-.033-.693-.099-.198-.891-2.148-1.221-2.94-.322-.77-.65-.666-.891-.679-.231-.011-.495-.013-.759-.013-.264 0-.693.099-1.056.495-.363.396-1.386 1.353-1.386 3.301s1.419 3.83 1.617 4.095c.198.264 2.793 4.264 6.77 5.98.946.409 1.684.653 2.259.836.949.302 1.813.259 2.496.157.761-.114 2.34-.957 2.67-1.881.33-.924.33-1.716.231-1.881-.099-.165-.363-.264-.759-.462z"/></svg> WhatsApp Kontakt`;
+  container.appendChild(whatsappBtn);
 }
 
 window.onload = setup;
